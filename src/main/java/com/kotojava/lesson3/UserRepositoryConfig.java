@@ -14,9 +14,9 @@ public class UserRepositoryConfig {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setServerNames(new String[]{""});
         dataSource.setPortNumbers(new int[]{8787});
-        dataSource.setDatabaseName("");
-        dataSource.setUser("");
-        dataSource.setPassword("");
+        dataSource.setDatabaseName("javacore");
+        dataSource.setUser("javacore");
+        dataSource.setPassword("javacore_local");
         return dataSource;
     }
 
