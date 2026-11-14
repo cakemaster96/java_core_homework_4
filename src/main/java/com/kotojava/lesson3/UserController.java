@@ -17,22 +17,22 @@ public class UserController {
 
     private UserRepository userRepository;
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User newUser = User.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .surname(user.getSurname())
-                .age(user.getAge())
-                .country(user.getCountry())
-                .profession(user.getProfession())
-                .email(user.getEmail())
-                .build();
-
-        userRepository.save(newUser);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
-    }
+//    @PostMapping
+//    public ResponseEntity<User> createUser(@RequestBody User user) {
+//        User newUser = User.builder()
+//                .id(user.getId())
+//                .name(user.getName())
+//                .surname(user.getSurname())
+//                .age(user.getAge())
+//                .country(user.getCountry())
+//                .profession(user.getProfession())
+//                .email(user.getEmail())
+//                .build();
+//
+//        userRepository.save(newUser);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id) {

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +23,18 @@ public class UserRepository {
     }
 
     public void save(User newUser) {
-        String sql = "INSERT INTO users (name, surname, age, country, profession, email) " +
+        String sql = "INSERT INTO users (name, birthDate, city, address, email, phone) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, newUser.getName());
-            statement.setString(2, newUser.getSurname());
-            statement.setInt(3, newUser.getAge());
-            statement.setString(4, newUser.getCountry());
-            statement.setString(5, newUser.getProfession());
-            statement.setString(6, newUser.getEmail());
+            statement.setObject(2, newUser.getBirthDate());
+            statement.setString(3, newUser.getCity());
+            statement.setString(4, newUser.getAddress());
+            statement.setString(5, newUser.getEmail());
+            statement.setString(6, newUser.getPhone());
 
             statement.executeUpdate();
 
@@ -49,7 +50,7 @@ public class UserRepository {
     }
 
     public User getUserById(long id) {
-        String sql = "SELECT id, name, surname, age, country, profession, email FROM users WHERE id = ?";
+        String sql = "SELECT id, name, birthDate, city, address, email, phone FROM users WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -69,7 +70,7 @@ public class UserRepository {
     }
 
     public List<User> getUsers() {
-        String sql = "SELECT id, name, surname, age, country, profession, email FROM users ORDER BY id";
+        String sql = "SELECT id, name, birthDate, city, address, email, phone FROM users ORDER BY id";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -90,11 +91,11 @@ public class UserRepository {
         return User.builder()
                 .id(resultSet.getLong("id"))
                 .name(resultSet.getString("name"))
-                .surname(resultSet.getString("surname"))
-                .age(resultSet.getInt("age"))
-                .country(resultSet.getString("country"))
-                .profession(resultSet.getString("profession"))
+                .birthDate(resultSet.getObject("birthDate", LocalDate.class))
+                .city(resultSet.getString("city"))
+                .address(resultSet.getString("address"))
                 .email(resultSet.getString("email"))
+                .phone(resultSet.getString("phone"))
                 .build();
     }
 }
